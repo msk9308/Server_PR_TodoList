@@ -1,0 +1,62 @@
+package com.msk9308.todo.service;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.msk9308.todo.config.DBInfo;
+import com.msk9308.todo.config.OracleConnection;
+import com.msk9308.todo.model.TodoVO;
+
+public class TodoServiceImplV1 implements TodoService {
+	
+	protected Connection dbConn;
+	public TodoServiceImplV1() {
+		dbConn = OracleConnection.getDBConnection();
+	}
+	protected List<TodoVO> select(PreparedStatement pStr) throws SQLException{
+		List<TodoVO> tdList = new ArrayList<TodoVO>();
+		ResultSet rSet = pStr.executeQuery();
+		while(rSet.next()) {
+			TodoVO tdVO = new TodoVO();
+			tdVO.setTd_num(rSet.getInt(DBInfo.td_num));
+			tdVO.setTd_work(rSet.getString(DBInfo.td_work));
+			tdVO.setTd_date(rSet.getString(DBInfo.td_date));
+			tdVO.setTd_place(rSet.getString(DBInfo.td_place));
+			tdList.add(tdVO);
+		}
+		System.out.println(tdList.toString());
+		return tdList;
+		
+	}
+	
+	
+	@Override
+	public List<TodoVO> selectAll() {
+		
+		String sql = " SELECT * FROM tbl_todo ";
+		
+		PreparedStatement pStr = null;
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			List<TodoVO> tdList = this.select(pStr); 
+			pStr.close();
+			return tdList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tdList;
+	}
+
+	@Override
+	public Integer insert(TodoVO tdVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,10 @@
+package com.msk9308.todo.config;
+
+public class DBInfo {
+	
+	public static final String td_num = "td_num";
+	public static final String td_work = "td_work";
+	public static final String td_date = "td_date";
+	public static final String td_place = "td_place";
+
+}

@@ -1,0 +1,10 @@
+package com.msk9308.todo.config;
+
+public class DBInfo {
+	
+	public static final String td_num = "No.";
+	public static final String fd_work = "할일";
+	public static final String fd_date = "작성일자";
+	public static final String fd_place = "장소";
+
+}
