@@ -15,9 +15,10 @@ import lombok.ToString;
 
 public class TodoVO {
 	
-	private Integer td_num;
+	private Integer td_num = 0;
 	private String td_work;
 	private String td_date;
+	private String td_time;
 	private String td_place;
 	
 

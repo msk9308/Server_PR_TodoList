@@ -37,6 +37,7 @@ public class TodoServiceImplV1 implements TodoService {
 				tdVO.setTd_num(rSet.getInt("td_num"));
 				tdVO.setTd_work(rSet.getString("td_work"));
 				tdVO.setTd_date(rSet.getString("td_date"));
+				tdVO.setTd_time(rSet.getString("td_time"));
 				tdVO.setTd_place(rSet.getString("td_place"));
 				tdList.add(tdVO);
 				System.out.println(tdList.toString());
@@ -57,19 +58,23 @@ public class TodoServiceImplV1 implements TodoService {
 	@Override
 	public Integer insert(TodoVO tdVO) {
 		String sql = " INSERT INTO tbl_todo ";
-		sql += " ( td_num"
-				+ "    td_work"
-				+ "    td_date"
-				+ "    td_place";
-		sql += " VALUES(?,?,?,?)";
+		sql += "(td_num,";
+		sql += "td_work,";
+		sql += "td_date,";
+		sql += "td_time,";
+		sql += "td_place)";
+		sql += " VALUES(seq.nextval,?,?,?,?)";
 		PreparedStatement pStr = null;
+		System.out.println(tdVO);
+		System.out.println(sql);
 		
 		try {
 			pStr = dbConn.prepareStatement(sql);
-			pStr.setInt(1,tdVO.getTd_num());
-			pStr.setString(3, tdVO.getTd_work());
+//			pStr.setInt(0,tdVO.getTd_num());
+			pStr.setString(1, tdVO.getTd_work());
 			pStr.setString(2,tdVO.getTd_date());
-			pStr.setString(3, tdVO.getTd_place());
+			pStr.setString(3, tdVO.getTd_time());
+			pStr.setString(4, tdVO.getTd_place());
 			
 			pStr.executeUpdate();
 			pStr.close();

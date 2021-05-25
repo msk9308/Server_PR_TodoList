@@ -28,32 +28,49 @@ public class TodoController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String subPath = req.getPathInfo();
-		if(subPath.equals("/insert")) {
+		if (subPath.equals("/insert")) {
 			TodoVO tdVO = new TodoVO();
 			SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat st = new SimpleDateFormat("HH:mm:ss");
 			Date date = new Date(System.currentTimeMillis());
 			tdVO.setTd_num(0);
-			
+			tdVO.setTd_date(subPath);
+			tdVO.setTd_time(subPath);
+			req.setAttribute("TD", tdVO);
+
 		}
-		
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String td_num = req.getParameter(DBInfo.td_num);
-		String td_work = req.getParameter(DBInfo.td_work);
-		String td_date = req.getParameter(DBInfo.td_date);
-		String td_place = req.getParameter(DBInfo.td_place);
 		
+		System.out.println("11111");
+		String subPath = req.getPathInfo();
+		System.out.println("2222222222");
+		System.out.println(subPath);
+		System.out.println("3333333");
+		String td_num = req.getParameter("td_num");
+		String td_date = req.getParameter("td_date");
+		System.out.println("4444444");
+		String td_time = req.getParameter("td_time");
+		String td_work = req.getParameter("td_work");
+		String td_place = req.getParameter("td_place");
 		TodoVO tdVO = new TodoVO();
-//		tdVO.setTd_num(td_num);
-		tdVO.setTd_work(td_work);
-		tdVO.setTd_date(td_date);
-		tdVO.setTd_place(td_place);
-		
-		resp.sendRedirect("/todo/");
-		
-	}
+		System.out.println("55555555");
 
+		tdVO.setTd_work(td_work);
+		System.out.println("6666666");
+		tdVO.setTd_date(td_date);
+		tdVO.setTd_time(td_time);
+		tdVO.setTd_place(td_place);
+		System.out.println("777777");
+		if (subPath.equals("/insert")) {
+			System.out.println("5555");
+			tdService.insert(tdVO);
+			resp.sendRedirect("/todo/");
+
+		}
+
+	}
 }
